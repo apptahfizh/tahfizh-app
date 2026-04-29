@@ -35,40 +35,7 @@
     <!-- JS -->
     <script src="/app.js"></script>
 
-    <script>
-      async function loadDataTahfizh() {
-        const list = document.getElementById("list");
-        if (!list) return;
-
-        const res = await fetch("/api/peserta");
-        const data = await res.json();
-
-        list.innerHTML = "";
-
-        // filter hanya tahfizh
-        const filtered = data.filter((item) => item.jenis === "tahfizh");
-
-        if (filtered.length === 0) {
-          list.innerHTML = "<p>Belum ada data</p>";
-          return;
-        }
-
-        filtered.forEach((item) => {
-          const li = document.createElement("li");
-          li.innerHTML = `
-          <strong>${item.nama}</strong><br>
-          Kelas: ${item.kelas}<br>
-          Juz: ${item.juz}
-        `;
-          list.appendChild(li);
-        });
-      }
-
-      function goBack() {
-        window.location.href = "/";
-      }
-
-      loadDataTahfizh();
-    </script>
+    <script src="/js/main.js"></script>
+    <script src="/js/tahfizh-input.js"></script>
   </body>
 </html>
