@@ -48,4 +48,20 @@ async function tambahData(jenis) {
 if (document.getElementById("list")) {
   loadData();
 }
-loadData();
+async function loadData() {
+  const list = document.getElementById("list");
+
+  // kalau tidak ada list, hentikan
+  if (!list) return;
+
+  const res = await fetch("/api/peserta");
+  const data = await res.json();
+
+  list.innerHTML = "";
+
+  data.forEach((item) => {
+    const li = document.createElement("li");
+    li.innerText = `${item.nama} - ${item.kelas} - Juz ${item.juz}`;
+    list.appendChild(li);
+  });
+}
