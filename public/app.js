@@ -45,4 +45,7 @@ async function tambahData(jenis) {
   alert("Data tersimpan");
 }
 
+if (document.getElementById("list")) {
+  loadData();
+}
 loadData();
