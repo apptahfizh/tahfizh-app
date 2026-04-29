@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar Peserta Tahfizh Day</title>
+
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-top">
+        <span class="header-title">Daftar Tahfizh Day</span>
+        <button onclick="goBack()" class="btn-logout">← Kembali</button>
+      </div>
+    </header>
+
+    <!-- LIST -->
+    <section class="card">
+      <ul id="list"></ul>
+    </section>
+
+    <!-- JS -->
+    <script src="/app.js"></script>
+
+    <script>
+      async function loadDataTahfizh() {
+        const list = document.getElementById("list");
+        if (!list) return;
+
+        const res = await fetch("/api/peserta");
+        const data = await res.json();
+
+        list.innerHTML = "";
+
+        // filter hanya tahfizh
+        const filtered = data.filter((item) => item.jenis === "tahfizh");
+
+        if (filtered.length === 0) {
+          list.innerHTML = "<p>Belum ada data</p>";
+          return;
+        }
+
+        filtered.forEach((item) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+          <strong>${item.nama}</strong><br>
+          Kelas: ${item.kelas}<br>
+          Juz: ${item.juz}
+        `;
+          list.appendChild(li);
+        });
+      }
+
+      function goBack() {
+        window.location.href = "/";
+      }
+
+      loadDataTahfizh();
+    </script>
+  </body>
+</html>
