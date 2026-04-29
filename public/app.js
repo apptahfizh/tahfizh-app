@@ -7,10 +7,7 @@ async function loadData() {
 
   data.forEach((item) => {
     const li = document.createElement("li");
-    li.innerHTML = `
-      ${item.nama} - ${item.kelas} - Juz ${item.juz}
-      <button onclick="hapus(${item.id})">Hapus</button>
-    `;
+    li.innerText = `${item.nama} - ${item.kelas} - Juz ${item.juz}`;
     list.appendChild(li);
   });
 }
@@ -20,20 +17,15 @@ async function tambahData() {
   const kelas = document.getElementById("kelas").value;
   const juz = document.getElementById("juz").value;
 
+  if (!nama || !kelas || !juz) {
+    alert("Isi semua data!");
+    return;
+  }
+
   await fetch("/api/peserta", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nama, kelas, juz }),
-  });
-
-  loadData();
-}
-
-async function hapus(id) {
-  await fetch(`/api/peserta?id=${id}`, {
-    method: "DELETE",
   });
 
   loadData();
